@@ -9,7 +9,7 @@ const QuickSubtractionPage: SFC<any> = ({ }) => (
         <SubtractionProblemControl />
         <IonFooter>
             <IonToolbar >
-                <IonButton color="success" expand="full" style={{ fontSize: "2em" }}><IonRippleEffect /> CHECK ANSWER</IonButton>
+                <IonButton color="success" expand="full" style={{ fontSize: "2em" }}><IonRippleEffect /> ANSWER</IonButton>
             </IonToolbar>
         </IonFooter>
     </>
