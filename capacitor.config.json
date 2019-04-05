@@ -1,0 +1,6 @@
+{
+  "appId": "io.ionic.starter",
+  "appName": "Quick Math for Ben",
+  "bundledWebRuntime": false,
+  "webDir": "build"
+}

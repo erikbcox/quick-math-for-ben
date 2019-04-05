@@ -1,0 +1,8 @@
+{
+  "name": "Quick Math for Ben",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "custom",
+  "id": "a015a2e4"
+}
