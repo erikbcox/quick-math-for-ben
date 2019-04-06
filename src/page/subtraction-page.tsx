@@ -13,9 +13,9 @@ type State = {
     problem: SubtractionProblem,
 }
 
-const generator = new SubtractionProblemGenerator(20,0);
+const generator = new SubtractionProblemGenerator(20, 0);
 
-const initialState: State = { answeredIncorrectly: false, checkAnswer: false, correctCount: 0, totalCount: 0, problem:generator.getNext()}
+const initialState: State = { answeredIncorrectly: false, checkAnswer: false, correctCount: 0, totalCount: 0, problem: generator.getNext() }
 class QuickSubtractionPage extends Component<object, State>{
     readonly state: State = initialState
     onUpdateAnswer = (answer: number) => {
@@ -23,7 +23,7 @@ class QuickSubtractionPage extends Component<object, State>{
     }
 
     onCheckAnswer = () => {
-        if(this.state.answer === null || this.state.answer === undefined){
+        if (this.state.answer === null || this.state.answer === undefined) {
             return;
         }
         this.setState({
@@ -38,7 +38,7 @@ class QuickSubtractionPage extends Component<object, State>{
 
     onNextProblem = () => {
         this.handleIncrementTotal();
-        if(!this.state.answeredIncorrectly){
+        if (!this.state.answeredIncorrectly) {
             this.handleIncrementCorrect();
         }
         this.setState({
@@ -55,7 +55,7 @@ class QuickSubtractionPage extends Component<object, State>{
     showSuccess = () => {
         return (<IonItem color="success" onClick={() => this.onNextProblem()}>
             <IonLabel >
-                Correct Answer! 
+                Correct Answer!
         </IonLabel>
             <IonIcon name="star" slot="end" />
             <IonIcon name="happy" slot="end" />
@@ -100,9 +100,11 @@ class QuickSubtractionPage extends Component<object, State>{
 
                 <IonFooter>
                     <IonToolbar >
-                        {!this.state.checkAnswer && <IonButton color="dark" expand="full" style={{ fontSize: "2em" }} onClick={() => this.onCheckAnswer()}><IonRippleEffect /> Answer</IonButton>}
-                        {this.state.checkAnswer && this.state.answer !== this.state.problem.difference() && <IonButton color="tertiary" expand="full" style={{ fontSize: "2em" }} onClick={() => this.onRetryAnswer()}><IonRippleEffect /> Try Again</IonButton>}
-                        {this.state.checkAnswer && this.state.answer === this.state.problem.difference() && <IonButton color="secondary" expand="full" style={{ fontSize: "2em" }} onClick={() => this.onNextProblem()}><IonRippleEffect /> Next Problem</IonButton>}
+                        {!this.state.checkAnswer && <IonButton
+                            color="dark" expand="full"
+                            style={{ fontSize: "1em", textTransform: "none" }} onClick={() => this.onCheckAnswer()}><IonRippleEffect /> Answer</IonButton>}
+                        {this.state.checkAnswer && this.state.answer !== this.state.problem.difference() && <IonButton color="tertiary" expand="full" style={{ fontSize: "1em" , textTransform: "none"}} onClick={() => this.onRetryAnswer()}><IonRippleEffect /> Try Again</IonButton>}
+                        {this.state.checkAnswer && this.state.answer === this.state.problem.difference() && <IonButton color="secondary" expand="full" style={{ fontSize: "1em" , textTransform: "none"}} onClick={() => this.onNextProblem()}><IonRippleEffect /> Next Problem</IonButton>}
 
                     </IonToolbar>
                 </IonFooter>
