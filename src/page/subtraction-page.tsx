@@ -88,7 +88,6 @@ class QuickSubtractionPage extends Component<object, State>{
                         }
                     }}
                     onAddValueToAnswer={(value: number) => {
-                        console.log(`onAddValueToAnswer: ${value}`)
                         if (this.state.answer && this.state.answer.toString().length > 0) {
                             const updatedAnswerAsString = `${this.state.answer}${value}`;
                             this.onUpdateAnswer(+updatedAnswerAsString)
