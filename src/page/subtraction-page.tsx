@@ -1,149 +1,114 @@
-import React, { Component } from 'react';
-import {
-  IonButton, IonToolbar, IonFooter,
-  IonRippleEffect, IonItem, IonLabel, IonIcon, IonTitle, IonGrid, IonRow, IonCol, IonText,
-} from '@ionic/react';
+import React, { FC, useState, useReducer } from 'react';
+import { SubtractionProblemGenerator, SubtractionProblem, SubtractionProblemResult } from '../models/subtraction';
 import SubtractionHeader from '../components/subtraction/header';
 import SubtractionProblemControl from '../components/subtraction/subtraction-problem';
-import { SubtractionProblem, SubtractionProblemGenerator } from '../models/subtraction';
-import {
-  CSSTransition,
-} from 'react-transition-group';
+import SubtractionControls from '../components/subtraction/subtraction-controls';
 import "./subtraction-page.css";
-
-type State = {
-  answer?: number,
-  answeredIncorrectly: boolean,
-  checkAnswer: boolean,
-  correctCount: number,
-  totalCount: number,
-  problem: SubtractionProblem,
-}
+import SubtractionComplete from '../components/subtraction/subtraction-confirmation';
 
 const generator = new SubtractionProblemGenerator(20, 0);
-
-const initialState: State = { answeredIncorrectly: false, checkAnswer: false, correctCount: 0, totalCount: 0, problem: generator.getNext() }
-class QuickSubtractionPage extends Component<object, State>{
-  readonly state: State = initialState
-  onUpdateAnswer = (answer: number) => {
-    this.setState({ answer });
-  }
-
-  onCheckAnswer = () => {
-    if (this.state.answer === null || this.state.answer === undefined) {
-      return;
+const getResults = (set: SubtractionProblem[]) => {
+    let i = 0;
+    const results = [];
+    while (i < set.length) {
+        results.push(new SubtractionProblemResult(set[i]))
+        i++;
     }
-    this.setState({
-      checkAnswer: true,
-      answeredIncorrectly: this.state.answer === this.state.problem.difference()
-    });
-  }
-
-  onRetryAnswer = () => {
-    this.setState({ answer: undefined, checkAnswer: false, });
-  }
-
-  onNextProblem = () => {
-    this.handleIncrementTotal();
-    if (!this.state.answeredIncorrectly) {
-      this.handleIncrementCorrect();
-    }
-    this.setState({
-      answer: undefined,
-      checkAnswer: false,
-      problem: generator.getNext(),
-
-    })
-  }
-
-  handleIncrementTotal = () => this.setState(incrementTotal);
-  handleIncrementCorrect = () => this.setState(incrementCorrect);
-
-  showSuccess = () => {
-    return (<IonItem color="success" onClick={() => this.onNextProblem()}>
-      <IonLabel >
-        Correct Answer!
-        </IonLabel>
-      <IonIcon name="star" slot="end" />
-      <IonIcon name="happy" slot="end" />
-      <IonIcon name="star" slot="end" />
-      <IonIcon name="happy" slot="end" />
-    </IonItem>)
-  }
-
-  footerLabel = () => {
-    return (
-      <IonItem lines="none">
-        <IonText >{`Problem ${this.state.totalCount + 1} of 20`}</IonText>
-      </IonItem>
-    )
-  }
-
-  showIncorrect = () => {
-    return (<IonItem color="danger" onClick={() => this.onRetryAnswer()}>
-      <IonLabel>
-        Not quite right. Let's try again.
-        </IonLabel>
-      <IonIcon name="redo" slot="end" />
-    </IonItem>)
-  }
-
-  render() {
-    return (
-      <>
-        <SubtractionHeader />
-        <SubtractionProblemControl
-          problem={this.state.problem}
-          answer={this.state.answer}
-          onDeleteValueFromAnswer={() => {
-            if (this.state.answer && this.state.answer.toString().length > 0) {
-              const updatedAnswerAsString = this.state.answer.toString().substr(0, this.state.answer.toString().length - 1)
-              this.onUpdateAnswer(+updatedAnswerAsString)
-            }
-          }}
-          onAddValueToAnswer={(value: number) => {
-            if (this.state.answer && this.state.answer.toString().length > 0) {
-              const updatedAnswerAsString = `${this.state.answer}${value}`;
-              this.onUpdateAnswer(+updatedAnswerAsString)
-            } else {
-              this.onUpdateAnswer(value);
-            }
-          }} />
-        <CSSTransition
-          timeout={{ enter: 300, exit: 700 }}
-          in={this.state.checkAnswer && this.state.answer === this.state.problem.difference()} classNames="labeltrans">
-          <div>
-            {this.state.checkAnswer && this.state.answer === this.state.problem.difference() && this.showSuccess()}
-          </div>
-        </CSSTransition>
-        <CSSTransition
-          timeout={{ enter: 300, exit: 700 }}
-          in={this.state.checkAnswer && this.state.answer !== this.state.problem.difference()} classNames="labeltrans">
-          <div>
-            {this.state.checkAnswer && this.state.answer !== this.state.problem.difference() && this.showIncorrect()}
-          </div>
-        </CSSTransition>
-        <IonFooter>
-          <IonGrid>
-            <IonRow>
-              <IonCol>
-                {this.footerLabel()}
-              </IonCol>
-              <IonCol>
-                {!this.state.checkAnswer && <IonButton color="dark" expand="full" onClick={() => this.onCheckAnswer()}>Answer</IonButton>}
-                {this.state.checkAnswer && this.state.answer !== this.state.problem.difference() && <IonButton color="tertiary" expand="full" onClick={() => this.onRetryAnswer()}>Try Again</IonButton>}
-                {this.state.checkAnswer && this.state.answer === this.state.problem.difference() && <IonButton color="secondary" expand="full" onClick={() => this.onNextProblem()}>Next</IonButton>}
-
-              </IonCol>
-            </IonRow>
-          </IonGrid>
-        </IonFooter>
-      </>
-    )
-  }
+    return results;
 }
 
-const incrementTotal = (prevState: State) => ({ totalCount: prevState.totalCount + 1 });
-const incrementCorrect = (prevState: State) => ({ correctCount: prevState.correctCount + 1 });
+const QuickSubtractionPage: FC<object> = ({ }) => {
+    const [results, setResults] = useState<SubtractionProblemResult[]>(getResults(generator.getProblems(10)));
+    const [activeProblemIndex, problemDispatch] = useReducer((state, action) => {
+        switch (action.type) {
+            case "NEXT":
+                return state + 1;
+            case "PREV":
+                return state - 1;
+            case "RESET":
+                return 0;
+            default:
+                return state;
+        }
+    }, 0);
+    const [showResults, setShowResults] = useState(false);
+
+    const onResetProblemSet = () => {
+        setResults(getResults(generator.getProblems(10)));
+        problemDispatch({type:"RESET"});
+        setShowResults(false)
+    }
+
+    const getActiveResult = () => {
+        return results[activeProblemIndex];
+    }
+
+    const updateActiveProblemAnswer = (answer?: number) => {
+        const updatedResult = results[activeProblemIndex];
+        updatedResult.answer = answer;
+
+        setResults([
+            ...results.slice(0, activeProblemIndex),
+            updatedResult,
+            ...results.slice(activeProblemIndex + 1, results.length)
+        ]);
+    }
+
+    const updateActiveProblemResult = (correctFirstTry: boolean) => {
+        const updatedResult = results[activeProblemIndex];
+        updatedResult.correctFirstTry = correctFirstTry;
+
+        setResults([
+            ...results.slice(0, activeProblemIndex),
+            updatedResult,
+            ...results.slice(activeProblemIndex + 1, results.length)
+        ]);
+    }
+
+
+    return (<>
+        <SubtractionHeader />
+        {!showResults && <>
+            <SubtractionProblemControl
+                problem={getActiveResult().problem}
+                answer={getActiveResult().answer}
+                onDeleteValueFromAnswer={() => {
+                    const activeAnswer = getActiveResult().answer;
+                    if (activeAnswer === undefined) {
+                        return
+                    } else {
+                        const answer = activeAnswer || 0;
+                        const updatedAnswerAsString = answer.toString().substr(0, answer.toString().length - 1)
+                        updateActiveProblemAnswer(+updatedAnswerAsString)
+                    }
+                }}
+                onAddValueToAnswer={(value: number) => {
+                    const activeAnswer = getActiveResult().answer;
+                    if (activeAnswer === undefined || activeAnswer === null) {
+                        updateActiveProblemAnswer(value);
+                    } else {
+                        const updatedAnswerAsString = `${activeAnswer}${value}`;
+                        updateActiveProblemAnswer(+updatedAnswerAsString)
+                    }
+                }} />
+            <SubtractionControls
+                isAnswerEmpty={getActiveResult() ? getActiveResult().answer === undefined : true}
+                isAnswerCorrect={getActiveResult() ? getActiveResult().isCorrect() : false}
+                totalProblemCount={results.length}
+                activeProblemIndex={activeProblemIndex}
+                isLastProblem={activeProblemIndex === (results.length - 1)}
+                onGoToNext={(correctFirstTry: boolean) => {
+                    updateActiveProblemResult(correctFirstTry);
+                    problemDispatch({ type: "NEXT" });
+                }}
+                onGoToDone={(correctFirstTry: boolean) => {
+                    updateActiveProblemResult(correctFirstTry);
+                    setShowResults(true);
+                }}
+                onResetAnswer={() => updateActiveProblemAnswer(undefined)} /></>}
+        {showResults && <SubtractionComplete onResetProblemSet={() => onResetProblemSet()} totalCorrect={results.filter(r => r.correctFirstTry).length} totalProblems={results.length} />}
+    </>
+    )
+}
 
 export default QuickSubtractionPage;
