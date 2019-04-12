@@ -7,6 +7,7 @@
     "@capacitor/cli": "1.0.0-beta.19",
     "@capacitor/core": "1.0.0-beta.19",
     "@ionic/react": "0.0.5",
+    "@sentry/browser": "^5.0.7",
     "@types/jest": "24.0.11",
     "@types/node": "11.13.0",
     "@types/react": "16.8.12",
@@ -15,6 +16,7 @@
     "@types/react-router-dom": "^4.3.1",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
+    "react-ga": "^2.5.7",
     "react-router": "^5.0.0",
     "react-router-dom": "^5.0.0",
     "react-scripts": "2.1.8",
@@ -37,6 +39,8 @@
     "not op_mini all"
   ],
   "devDependencies": {
+    "@sentry/types": "^5.0.6",
+    "@types/react-ga": "^2.3.0",
     "@types/react-transition-group": "^2.8.0"
   }
 }

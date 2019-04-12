@@ -6,6 +6,8 @@ import SubtractionControls from '../components/subtraction/subtraction-controls'
 import "./subtraction-page.css";
 import SubtractionComplete from '../components/subtraction/subtraction-confirmation';
 
+import ReactGA from "react-ga";
+
 const generator = new SubtractionProblemGenerator(20, 0);
 const getResults = (set: SubtractionProblem[]) => {
     let i = 0;
@@ -16,6 +18,8 @@ const getResults = (set: SubtractionProblem[]) => {
     }
     return results;
 }
+
+ReactGA.pageview("/subtraction");
 
 const QuickSubtractionPage: FC<object> = ({ }) => {
     const [results, setResults] = useState<SubtractionProblemResult[]>(getResults(generator.getProblems(10)));
@@ -31,11 +35,12 @@ const QuickSubtractionPage: FC<object> = ({ }) => {
                 return state;
         }
     }, 0);
+
     const [showResults, setShowResults] = useState(false);
 
     const onResetProblemSet = () => {
         setResults(getResults(generator.getProblems(10)));
-        problemDispatch({type:"RESET"});
+        problemDispatch({ type: "RESET" });
         setShowResults(false)
     }
 
@@ -64,7 +69,6 @@ const QuickSubtractionPage: FC<object> = ({ }) => {
             ...results.slice(activeProblemIndex + 1, results.length)
         ]);
     }
-
 
     return (<>
         <SubtractionHeader />

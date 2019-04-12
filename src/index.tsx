@@ -4,6 +4,9 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { BrowserRouter } from 'react-router-dom';
+import ReactGA from 'react-ga';
+
+ReactGA.initialize("UA-138251738-1");
 
 ReactDOM.render(
     <BrowserRouter><App /></BrowserRouter>, document.getElementById('root'));
