@@ -5,6 +5,14 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { BrowserRouter } from 'react-router-dom';
 import ReactGA from 'react-ga';
+import * as Sentry from '@sentry/browser';
+
+
+Sentry.init({
+    dsn: "https://34517b80698e4fd1b9382ceed08d8030@sentry.io/1436213"
+});
+// should have been called before using it here
+// ideally before even rendering your react app
 
 ReactGA.initialize("UA-138251738-1");
 

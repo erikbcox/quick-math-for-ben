@@ -1,4 +1,4 @@
-import React, { FC, useState, useReducer } from 'react';
+import React, { FC, useState, useReducer, useEffect } from 'react';
 import { SubtractionProblemGenerator, SubtractionProblem, SubtractionProblemResult } from '../models/subtraction';
 import SubtractionHeader from '../components/subtraction/header';
 import SubtractionProblemControl from '../components/subtraction/subtraction-problem';
@@ -21,7 +21,9 @@ const getResults = (set: SubtractionProblem[]) => {
 
 
 const QuickSubtractionPage: FC<object> = ({ }) => {
-    ReactGA.pageview("/subtraction");
+    useEffect(() => {
+        ReactGA.pageview("/subtraction");
+    }, []);
     const [results, setResults] = useState<SubtractionProblemResult[]>(getResults(generator.getProblems(10)));
     const [activeProblemIndex, problemDispatch] = useReducer((state, action) => {
         switch (action.type) {

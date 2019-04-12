@@ -10,17 +10,20 @@ import QuickLettersPage from './components/letters/quick-letters';
 import QuickSubtractionPage from './page/subtraction-page';
 import './styles/main.css';
 import Landing from './components/site/landing';
+import ErrorBoundary from './page/ErrorBoundtry';
 
 class App extends Component {
   render() {
     return (
       <IonApp>
-        <Switch>
-          <Route exact={true} path='/' render={() => <Landing />} />
-          <Route exact={true} path='/addition' component={QuickAdditionPage} />
-          <Route exact={true} path='/subtraction' component={QuickSubtractionPage} />
-          <Route exact={true} path='/letters' component={QuickLettersPage} />
-        </Switch>
+        <ErrorBoundary>
+          <Switch>
+            <Route exact={true} path='/' render={() => <Landing />} />
+            <Route exact={true} path='/addition' component={QuickAdditionPage} />
+            <Route exact={true} path='/subtraction' component={QuickSubtractionPage} />
+            <Route exact={true} path='/letters' component={QuickLettersPage} />
+          </Switch>
+        </ErrorBoundary>
       </IonApp>
     );
   }
