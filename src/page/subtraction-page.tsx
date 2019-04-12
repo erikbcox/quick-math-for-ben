@@ -19,9 +19,9 @@ const getResults = (set: SubtractionProblem[]) => {
     return results;
 }
 
-ReactGA.pageview("/subtraction");
 
 const QuickSubtractionPage: FC<object> = ({ }) => {
+    ReactGA.pageview("/subtraction");
     const [results, setResults] = useState<SubtractionProblemResult[]>(getResults(generator.getProblems(10)));
     const [activeProblemIndex, problemDispatch] = useReducer((state, action) => {
         switch (action.type) {
