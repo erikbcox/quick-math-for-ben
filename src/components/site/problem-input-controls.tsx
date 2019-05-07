@@ -14,7 +14,7 @@ type Props = {
     isLastProblem: boolean,
 }
 
-const SubtractionControls: FC<Props> = ({ activeProblemIndex, isLastProblem, isAnswerEmpty, totalProblemCount, isAnswerCorrect, onResetAnswer, onGoToNext, onGoToDone }) => {
+const ProblemInputControls: FC<Props> = ({ activeProblemIndex, isLastProblem,isAnswerEmpty, totalProblemCount, isAnswerCorrect, onResetAnswer, onGoToNext, onGoToDone }) => {
     const [checkAnswer, setCheckAnswer] = useState(false);
     const [isFirstAnswerCorrect, setIsFirstAnswerCorrect] = useState(false);
     const [tryCount, setTryCount] = useState(0);
@@ -39,9 +39,9 @@ const SubtractionControls: FC<Props> = ({ activeProblemIndex, isLastProblem, isA
             in={checkAnswer && !isAnswerCorrect} classNames="labeltrans">
             <div>
                 {checkAnswer && !isAnswerCorrect && <IonItem color="danger" onClick={() => {
-                    onResetAnswer();
-                    setCheckAnswer(false);
-                }}>
+                            onResetAnswer();
+                            setCheckAnswer(false);
+                        }}>
                     <IonLabel>Not quite right.</IonLabel>
                     <IonIcon name="redo" slot="end" />
                 </IonItem>}
@@ -52,19 +52,19 @@ const SubtractionControls: FC<Props> = ({ activeProblemIndex, isLastProblem, isA
                 <IonRow>
                     <IonCol>
                         <IonItem lines="none">
-                            <IonText >{`Problem ${activeProblemIndex + 1} of ${totalProblemCount}`}</IonText>
+                            <IonText >{`Problem ${activeProblemIndex + 1} of ${totalProblemCount}`}</IonText>                           
                         </IonItem>
                     </IonCol>
                     <IonCol>
                         {!checkAnswer && <IonButton color="dark" expand="full" onClick={() => {
-                            if (isAnswerEmpty) {
+                            if(isAnswerEmpty){
                                 return;
                             }
                             setCheckAnswer(true);
                             if (tryCount === 0 && isAnswerCorrect) {
                                 setIsFirstAnswerCorrect(true);
                             }
-
+                            
                             setTryCount(tryCount + 1);
                         }}>Answer</IonButton>}
                         {checkAnswer && !isAnswerCorrect && <IonButton color="tertiary" expand="full" onClick={() => {
@@ -85,4 +85,4 @@ const SubtractionControls: FC<Props> = ({ activeProblemIndex, isLastProblem, isA
         </IonFooter></>);
 }
 
-export default SubtractionControls;
+export default ProblemInputControls;

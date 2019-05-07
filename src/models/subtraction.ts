@@ -1,5 +1,3 @@
-import ProblemView from "../components/subtraction/problem";
-
 export class SubtractionProblem {
     minuend: number;
     subtrahend: number;

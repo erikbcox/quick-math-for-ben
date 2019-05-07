@@ -1,0 +1,41 @@
+.Aligner {
+    display: flex;
+    align-items: center;
+    min-height: 24em;
+    justify-content: center;
+    height: 90vh;
+}
+
+.Aligner-item--fixed {
+    flex: none;
+}
+
+.Aligner-item {
+    flex: 1;
+    text-align: center;
+}
+
+@media (min-width: 0px) and (max-width: 450px) {
+    .Start-button {
+        font-size: 1.5em;
+    }
+    .done-text{
+        font-size: 1.5em;
+    }
+}
+
+@media (min-width: 451px) and (max-width: 900px) {
+    .Start-button {
+        font-size: 2.5em;
+    }
+    .done-text{
+        font-size: 1.5em;
+    }
+}
+
+.DoneLanding {
+    --background: url(../../images/math-abacus-background-min.jpg);
+    --background-repeat: no-repeat;
+    --background-size: cover;
+}
+

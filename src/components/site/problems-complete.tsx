@@ -1,6 +1,6 @@
 import React, { FC, } from "react";
 import { IonContent, IonButton, IonIcon, IonText, IonGrid, IonRow, IonCol } from "@ionic/react";
-import "./subtraction-confirmation.css";
+import "./problems-confirmation.css";
 
 
 type Props = {
@@ -9,7 +9,7 @@ type Props = {
     readonly onResetProblemSet: () => void,
 }
 
-const SubtractionComplete: FC<Props> = ({ totalProblems, totalCorrect, onResetProblemSet }) => {
+const ProblemsComplete: FC<Props> = ({ totalProblems, totalCorrect, onResetProblemSet }) => {
 
     return (<IonContent class="DoneLanding" >
         <div className="Aligner">
@@ -25,4 +25,4 @@ const SubtractionComplete: FC<Props> = ({ totalProblems, totalCorrect, onResetPr
     </IonContent>)
 }
 
-export default SubtractionComplete;
+export default ProblemsComplete;
