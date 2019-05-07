@@ -10,6 +10,8 @@ import QuickSubtractionPage from './page/subtraction-page';
 import './styles/main.css';
 import Landing from './components/site/landing';
 import ErrorBoundary from './page/ErrorBoundtry';
+import QuickMultiplicationPage from './page/multiplication-page';
+import QuickDivisionPage from './page/division-page';
 
 class App extends Component {
   render() {
@@ -20,8 +22,8 @@ class App extends Component {
             <Route exact={true} path='/' render={() => <Landing />} />
             <Route exact={true} path='/addition' component={QuickAdditionPage} />
             <Route exact={true} path='/subtraction' component={QuickSubtractionPage} />
-            <Route exact={true} path='/division' component={QuickSubtractionPage} />
-            <Route exact={true} path='/multiplication' component={QuickSubtractionPage} />
+            <Route exact={true} path='/division' component={QuickDivisionPage} />
+            <Route exact={true} path='/multiplication' component={QuickMultiplicationPage} />
           </Switch>
         </ErrorBoundary>
       </IonApp>
