@@ -1,24 +1,19 @@
-export class SubtractionProblem {
-    minuend: number;
-    subtrahend: number;
-    difference() {
-        return this.minuend - this.subtrahend;
+import { IProblem } from "./problem";
+
+export class SubtractionProblem implements IProblem {
+    number1: number;
+    number2: number;
+    opperand: string;
+    answer() {
+        return this.number1 - this.number2;
     }
-    constructor(minuend: number, subtrahend: number) {
-        this.minuend = minuend;
-        this.subtrahend = subtrahend;
+    constructor(number1: number, number2: number) {
+        this.number1 = number1;
+        this.number2 = number2;
+        this.opperand = "-";
     }
 }
 
-export class SubtractionProblemResult{
-    problem: SubtractionProblem;    
-    answer?: number;
-    correctFirstTry:boolean = false;    
-    isCorrect = () => this.problem.difference() === this.answer
-    constructor(problem: SubtractionProblem) {
-        this.problem = problem;
-    }
-}
 export class SubtractionProblemGenerator {
     high: number;
     low: number;
@@ -30,8 +25,8 @@ export class SubtractionProblemGenerator {
     }
 
     _getSet = () => {
-        if(this._set === null || this._set === undefined){
-            this._set = this._getAllProblems(this.low,this.high);
+        if (this._set === null || this._set === undefined) {
+            this._set = this._getAllProblems(this.low, this.high);
         }
         return this._set;
     }
@@ -40,7 +35,7 @@ export class SubtractionProblemGenerator {
         return Math.floor(Math.random() * (max - min + 1)) + min;
     }
 
-    _getAllProblems = (min: number, max: number) => {        
+    _getAllProblems = (min: number, max: number) => {
         const problems = [];
         let minuendCounter = max;
         let subtrahendCounter = min;
@@ -55,21 +50,14 @@ export class SubtractionProblemGenerator {
         return problems;
     }
 
-    getNext() {
-        const minuend = this._getRandomInt(this.low, this.high)
-        const subtrahend = this._getRandomInt(this.low, (minuend > 0 ? minuend - 1 : minuend));
-        return new SubtractionProblem(minuend, subtrahend);
-    }
-
     getProblems(count: number) {
         const set = this._getSet();
         const problems = [];
         const min = 0;
         const max = set.length;
         while (problems.length < count) {
-            problems.push(set[this._getRandomInt(min,max)])
+            problems.push(set[this._getRandomInt(min, max)])
         }
         return problems;
     }
 }
-

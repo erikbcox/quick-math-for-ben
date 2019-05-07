@@ -1,19 +1,21 @@
 import React, { FC, useState, useReducer, useEffect } from 'react';
-import { SubtractionProblemGenerator, SubtractionProblem, SubtractionProblemResult } from '../models/subtraction';
-import SubtractionProblemControl from '../components/subtraction/subtraction-problem';
-import SubtractionControls from '../components/subtraction/subtraction-controls';
-import "./subtraction-page.css";
-import SubtractionComplete from '../components/subtraction/subtraction-confirmation';
+
+import "./problem-page.css";
 
 import ReactGA from "react-ga";
 import ProblemHeader from '../components/site/ProblemHeader';
+import { SubtractionProblemGenerator, SubtractionProblem } from '../models/subtraction';
+import { ProblemResult } from '../models/problem';
+import ProblemControl from '../components/site/problem-control';
+import ProblemInputControls from '../components/site/problem-input-controls';
+import ProblemsComplete from '../components/site/problems-complete';
 
-const generator = new SubtractionProblemGenerator(20, 0);
+const generator = new SubtractionProblemGenerator(10, 0);
 const getResults = (set: SubtractionProblem[]) => {
     let i = 0;
     const results = [];
     while (i < set.length) {
-        results.push(new SubtractionProblemResult(set[i]))
+        results.push(new ProblemResult(set[i]))
         i++;
     }
     return results;
@@ -23,7 +25,7 @@ const QuickSubtractionPage: FC<object> = ({ }) => {
     useEffect(() => {
         ReactGA.pageview("/subtraction");
     }, []);
-    const [results, setResults] = useState<SubtractionProblemResult[]>(getResults(generator.getProblems(10)));
+    const [results, setResults] = useState<ProblemResult<SubtractionProblem>[]>(getResults(generator.getProblems(10)));
     const [activeProblemIndex, problemDispatch] = useReducer((state, action) => {
         switch (action.type) {
             case "NEXT":
@@ -74,7 +76,8 @@ const QuickSubtractionPage: FC<object> = ({ }) => {
     return (<>
         <ProblemHeader title="Quick Subtraction" />
         {!showResults && <>
-            <SubtractionProblemControl
+            <ProblemControl
+                opperand="-"
                 problem={getActiveResult().problem}
                 answer={getActiveResult().answer}
                 onDeleteValueFromAnswer={() => {
@@ -96,7 +99,7 @@ const QuickSubtractionPage: FC<object> = ({ }) => {
                         updateActiveProblemAnswer(+updatedAnswerAsString)
                     }
                 }} />
-            <SubtractionControls
+            <ProblemInputControls
                 isAnswerEmpty={getActiveResult() ? getActiveResult().answer === undefined : true}
                 isAnswerCorrect={getActiveResult() ? getActiveResult().isCorrect() : false}
                 totalProblemCount={results.length}
@@ -111,7 +114,7 @@ const QuickSubtractionPage: FC<object> = ({ }) => {
                     setShowResults(true);
                 }}
                 onResetAnswer={() => updateActiveProblemAnswer(undefined)} /></>}
-        {showResults && <SubtractionComplete onResetProblemSet={() => onResetProblemSet()} totalCorrect={results.filter(r => r.correctFirstTry).length} totalProblems={results.length} />}
+        {showResults && <ProblemsComplete onResetProblemSet={() => onResetProblemSet()} totalCorrect={results.filter(r => r.correctFirstTry).length} totalProblems={results.length} />}
     </>
     )
 }
