@@ -1,5 +1,5 @@
 import React, { FC, useState } from "react";
-import { IonFooter, IonGrid, IonRow, IonCol, IonButton, IonItem, IonText, IonLabel, IonIcon } from "@ionic/react/dist/components";
+import { IonFooter, IonGrid, IonRow, IonCol, IonButton, IonItem, IonText, IonLabel, IonIcon } from "@ionic/react";
 import { CSSTransition } from "react-transition-group";
 
 
@@ -47,7 +47,6 @@ const ProblemInputControls: FC<Props> = ({ activeProblemIndex, isLastProblem,isA
                 </IonItem>}
             </div>
         </CSSTransition>
-        <IonFooter>
             <IonGrid>
                 <IonRow>
                     <IonCol>
@@ -81,8 +80,7 @@ const ProblemInputControls: FC<Props> = ({ activeProblemIndex, isLastProblem,isA
                         }}>Done</IonButton>}
                     </IonCol>
                 </IonRow>
-            </IonGrid>
-        </IonFooter></>);
+            </IonGrid></>);
 }
 
 export default ProblemInputControls;

@@ -1,11 +1,10 @@
 import React, { SFC } from 'react';
-import { IonContent, IonCard, IonCardHeader, IonCardSubtitle, IonCardTitle, IonButton, IonIcon, IonRippleEffect, IonFab, IonFabButton, IonText, IonHeader, IonTitle, IonToolbar, IonGrid, IonRow, IonCol, IonImg } from "@ionic/react";
+import { IonContent, IonCard, IonCardHeader, IonCardSubtitle, IonCardTitle, IonButton, IonIcon, 
+    IonRippleEffect, IonFab, IonFabButton, IonText, IonHeader, IonTitle, IonToolbar, IonGrid, IonRow, 
+    IonCol, IonImg } from "@ionic/react";
 import { Link } from "react-router-dom";
 import "./landing.css";
 import divisionIcon from "../../images/division-symbol.svg"
-
-
-
 
 const Landing: SFC<any> = ({ }) => (<>
     <IonHeader>

@@ -1,36 +1,32 @@
 {
   "name": "quick-math-for-ben",
-  "version": "0.1.0",
+  "version": "0.0.1",
   "private": true,
   "dependencies": {
-    "@capacitor/android": "^1.0.0-beta.19",
-    "@capacitor/cli": "1.0.0-beta.19",
-    "@capacitor/core": "1.0.0-beta.19",
-    "@ionic/react": "0.0.5",
-    "@sentry/browser": "^5.0.7",
+    "@ionic/react": "^0.0.10",
+    "@ionic/react-router": "^0.0.10",
+    "@sentry/browser": "^5.6.1",
     "@types/jest": "24.0.11",
-    "@types/node": "11.13.0",
-    "@types/react": "16.8.12",
-    "@types/react-dom": "16.8.3",
-    "@types/react-router": "^4.4.5",
+    "@types/node": "11.11.3",
+    "@types/react": "^16.8.19",
+    "@types/react-dom": "^16.8.4",
+    "@types/react-router": "^4.4.4",
     "@types/react-router-dom": "^4.3.1",
+    "ionicons": "^4.6.2",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
-    "react-ga": "^2.5.7",
-    "react-router": "^5.0.0",
-    "react-router-dom": "^5.0.0",
-    "react-scripts": "2.1.8",
-    "react-transition-group": "^2.9.0",
-    "typescript": "3.4.1"
+    "react-ga": "^2.6.0",
+    "react-router": "^5.0.1",
+    "react-router-dom": "^5.0.1",
+    "react-scripts": "3.0.1",
+    "react-transition-group": "^4.2.2",
+    "typescript": "3.5.3"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "movetowww": "mv build/* www",
-    "copywww": "mkdir www && cp -R build/* www"
-
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -41,9 +37,10 @@
     "not ie <= 11",
     "not op_mini all"
   ],
+  "description": "An Ionic project",
   "devDependencies": {
-    "@sentry/types": "^5.0.6",
+    "@sentry/types": "^5.6.1",
     "@types/react-ga": "^2.3.0",
-    "@types/react-transition-group": "^2.8.0"
+    "@types/react-transition-group": "^4.2.2"
   }
 }

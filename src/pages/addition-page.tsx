@@ -9,6 +9,8 @@ import { ProblemResult } from '../models/problem';
 import ProblemControl from '../components/site/problem-control';
 import ProblemInputControls from '../components/site/problem-input-controls';
 import ProblemsComplete from '../components/site/problems-complete';
+import { IonFooter, IonTitle, IonToolbar, IonGrid, IonRow, IonCol, IonContent } from '@ionic/react';
+
 
 const generator = new AdditionProblemGenerator(10, 0);
 const getResults = (set: AdditionProblem[]) => {
@@ -75,45 +77,51 @@ const QuickAdditionPage: FC<object> = ({ }) => {
 
     return (<>
         <ProblemHeader title="Quick Addition" />
+
         {!showResults && <>
-            <ProblemControl
-                opperand="+"
-                problem={getActiveResult().problem}
-                answer={getActiveResult().answer}
-                onDeleteValueFromAnswer={() => {
-                    const activeAnswer = getActiveResult().answer;
-                    if (activeAnswer === undefined) {
-                        return
-                    } else {
-                        const answer = activeAnswer || 0;
-                        const updatedAnswerAsString = answer.toString().substr(0, answer.toString().length - 1)
-                        updateActiveProblemAnswer(+updatedAnswerAsString)
-                    }
-                }}
-                onAddValueToAnswer={(value: number) => {
-                    const activeAnswer = getActiveResult().answer;
-                    if (activeAnswer === undefined || activeAnswer === null) {
-                        updateActiveProblemAnswer(value);
-                    } else {
-                        const updatedAnswerAsString = `${activeAnswer}${value}`;
-                        updateActiveProblemAnswer(+updatedAnswerAsString)
-                    }
-                }} />
-            <ProblemInputControls
-                isAnswerEmpty={getActiveResult() ? getActiveResult().answer === undefined : true}
-                isAnswerCorrect={getActiveResult() ? getActiveResult().isCorrect() : false}
-                totalProblemCount={results.length}
-                activeProblemIndex={activeProblemIndex}
-                isLastProblem={activeProblemIndex === (results.length - 1)}
-                onGoToNext={(correctFirstTry: boolean) => {
-                    updateActiveProblemResult(correctFirstTry);
-                    problemDispatch({ type: "NEXT" });
-                }}
-                onGoToDone={(correctFirstTry: boolean) => {
-                    updateActiveProblemResult(correctFirstTry);
-                    setShowResults(true);
-                }}
-                onResetAnswer={() => updateActiveProblemAnswer(undefined)} /></>}
+            <IonContent>
+                <ProblemControl
+                    opperand="+"
+                    problem={getActiveResult().problem}
+                    answer={getActiveResult().answer}
+                    onDeleteValueFromAnswer={() => {
+                        const activeAnswer = getActiveResult().answer;
+                        if (activeAnswer === undefined) {
+                            return
+                        } else {
+                            const answer = activeAnswer || 0;
+                            const updatedAnswerAsString = answer.toString().substr(0, answer.toString().length - 1)
+                            updateActiveProblemAnswer(+updatedAnswerAsString)
+                        }
+                    }}
+                    onAddValueToAnswer={(value: number) => {
+                        const activeAnswer = getActiveResult().answer;
+                        if (activeAnswer === undefined || activeAnswer === null) {
+                            updateActiveProblemAnswer(value);
+                        } else {
+                            const updatedAnswerAsString = `${activeAnswer}${value}`;
+                            updateActiveProblemAnswer(+updatedAnswerAsString)
+                        }
+                    }} />
+
+            </IonContent>
+            <IonFooter>
+                <ProblemInputControls
+                    isAnswerEmpty={getActiveResult() ? getActiveResult().answer === undefined : true}
+                    isAnswerCorrect={getActiveResult() ? getActiveResult().isCorrect() : false}
+                    totalProblemCount={results.length}
+                    activeProblemIndex={activeProblemIndex}
+                    isLastProblem={activeProblemIndex === (results.length - 1)}
+                    onGoToNext={(correctFirstTry: boolean) => {
+                        updateActiveProblemResult(correctFirstTry);
+                        problemDispatch({ type: "NEXT" });
+                    }}
+                    onGoToDone={(correctFirstTry: boolean) => {
+                        updateActiveProblemResult(correctFirstTry);
+                        setShowResults(true);
+                    }}
+                    onResetAnswer={() => updateActiveProblemAnswer(undefined)} />
+            </IonFooter></>}
         {showResults && <ProblemsComplete onResetProblemSet={() => onResetProblemSet()} totalCorrect={results.filter(r => r.correctFirstTry).length} totalProblems={results.length} />}
     </>
     )

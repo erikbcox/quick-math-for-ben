@@ -1,9 +1,5 @@
 {
-  "name": "Quick Math for Ben",
-  "integrations": {
-    "capacitor": {},
-    "cordova": {}
-  },
-  "type": "custom",
-  "id": "a015a2e4"
+  "name": "quick-math-for-ben",
+  "integrations": {},
+  "type": "react"
 }
